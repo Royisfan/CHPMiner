@@ -1,0 +1,41 @@
+package duan;
+
+import gep.Formula;
+import gep.bool.BEvaluable;
+import gep.bool.BExpression;
+import gep.num.NVariable;
+
+/**
+ * 不等式公式
+ */
+public class DuanFormula extends Formula implements BEvaluable
+{
+	private NVariable[] variables; // 变量表
+
+	public DuanFormula(BExpression tree, NVariable[] variables)
+	{
+		super(tree);
+		this.variables = variables;
+	}
+
+	public void setValues(double[] values)
+	{
+		for (int index = 0; index < values.length && index < 26; index++)
+		{
+			NVariable variable = variables[index];
+			if (variable == null) continue;
+
+			variable.setValue(values[index]);
+		}
+	}
+	
+	public boolean evaluate()
+	{
+		return ((BExpression) tree).evaluate();
+	}
+	
+	public String toString()
+	{
+		return tree.toString();
+	}
+}

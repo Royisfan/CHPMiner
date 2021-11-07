@@ -1,0 +1,33 @@
+package gep.bool;
+
+import gep.Formula;
+
+/**
+ * 布尔公式
+ */
+public class BFormula extends Formula implements BEvaluable
+{
+	private BVariable[] variables; // 变量表
+
+	public BFormula(BExpression tree, BVariable[] variables)
+	{
+		super(tree);
+		this.variables = variables;
+	}
+
+	public void setValues(boolean[] values)
+	{
+		for (int index = 0; index < values.length; index++)
+		{
+			BVariable variable = variables[index - 1];
+			if (variable == null) continue;
+
+			variable.setValue(values[index]);
+		}
+	}
+
+	public boolean evaluate()
+	{
+		return ((BExpression) tree).evaluate();
+	}
+}

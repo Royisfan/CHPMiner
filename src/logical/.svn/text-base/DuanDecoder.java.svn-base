@@ -1,0 +1,88 @@
+package duan;
+
+import ga.Chromosome;
+import ga.Protein;
+import gep.Expression;
+import gep.GEP;
+import gep.GepDecoder;
+import gep.bool.BExpression;
+import gep.num.NExpression;
+import gep.num.NVariable;
+
+/**
+ * 用于数值优化的GEP解码器
+ * 
+ * 对于解码每一个个体需要做以下几件事情： 1) 调用 reset 重置解码器，准备解码当前个体 2) 调用 setConstantValues
+ * 设置当前个体的常量 (常量值是属于每一个个体的) 3) 调用 decode 解码当前个体
+ */
+public class DuanDecoder extends GepDecoder
+{
+	protected NVariable[] variables = new NVariable[26]; // 变量列表
+
+	public DuanDecoder(GEP gep)
+	{
+		super(gep);
+	}
+
+	/**
+	 * 设置常量值
+	 * 
+	 * @param values
+	 */
+	public void setConstantValues(double[] values)
+	{
+	}
+
+	/**
+	 * 重置解码器，准备开始解码下一个个体
+	 */
+	public void reset()
+	{
+		variables = new NVariable[26];
+	}
+
+	/**
+	 * 取得指定代码的变量 在解码一个个体的过程中，对同一代码，始终返回同一个变量
+	 * 
+	 * @param code
+	 * @return
+	 */
+	public Expression getVariable(char code)
+	{
+		int index = code - 'a';
+		if (variables[index] == null)
+		{
+			variables[index] = new NVariable(code);
+		}
+		return variables[index];
+	}
+
+	public Protein decode(Chromosome chromosome)
+	{
+		// 先重置解码器
+		reset();
+
+		DuanChromosome dc = (DuanChromosome) chromosome;
+
+		// 解码关系函数
+		BExpression root = (BExpression) ((DuanGep) gep).getRelation(dc.getRelation());
+
+		// 分别不等式左右两边
+		
+		char[][] genes = dc.getGenes();
+		for (int i = 0; i < 2; i++)
+		{
+			NExpression e = (NExpression) decode0(genes[i]);
+			root.addChild(e);
+		}
+
+		// 返回公式
+		return (Protein) new DuanFormula(root, variables);
+	}
+
+	protected Expression getConstant(char code)
+	{
+		return null;
+	}
+
+}

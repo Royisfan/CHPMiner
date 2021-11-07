@@ -1,0 +1,41 @@
+8
+
+dir
+3016
+svn://zuojie.3322.org/branches/old_zGEP/src/gep/ode
+svn://zuojie.3322.org
+
+
+
+2009-12-31T15:40:35.835372Z
+2985
+zuojie
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+ad69519f-ce08-0410-ae90-dd1ba532d96c
+
+OdeSolver.java
+file
+
+
+
+
+2010-01-15T05:35:41.656250Z
+23926843282a14418387c6649ae03617
+2009-12-31T15:40:35.835372Z
+2985
+zuojie
+has-props
+

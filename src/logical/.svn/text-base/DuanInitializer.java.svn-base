@@ -1,0 +1,57 @@
+package duan;
+
+import ga.Initializer;
+import ga.Population;
+
+/**
+ * 用于数值优化的初始种群产生器
+ */
+public class DuanInitializer implements Initializer
+{
+	private DuanGep gep;
+	private int size; // 种群大小
+
+	public DuanInitializer(DuanGep gep, int size)
+	{
+		this.gep = gep;
+		this.size = size;
+	}
+
+	public Population generateInitialPopulation()
+	{
+		Population population = new Population();
+
+		int geneNumber = gep.getGeneNumber();
+		int geneHead = gep.getGeneHead();
+		int geneTail = gep.getGeneTail();
+		int geneLength = gep.getGeneLength();
+		for (int k = 0; k < size; k++)
+		{
+			char[][] genes = new char[2][];
+			for (int x = 0; x < 2; x++)
+			{
+				char[] g = new char[geneLength * geneNumber];
+				genes[x] = g;
+
+				int index = 0;
+				for (int j = 0; j < geneNumber; j++)
+				{
+					for (int i = 0; i < geneHead; i++)
+					{
+						g[index++] = gep.getHeadCode();
+					}
+					for (int i = 0; i < geneTail; i++)
+					{
+						g[index++] = gep.getTailCode();
+					}
+				}
+			}
+
+			char relation = gep.getRelationCode();
+			population.add(new DuanChromosome(relation, genes));
+		}
+
+		return population;
+	}
+
+}

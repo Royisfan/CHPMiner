@@ -1,0 +1,89 @@
+8
+
+dir
+3016
+svn://zuojie.3322.org/branches/old_zGEP
+svn://zuojie.3322.org
+
+
+
+2010-01-20T09:40:25.705742Z
+3016
+gongjie
+has-props
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+ad69519f-ce08-0410-ae90-dd1ba532d96c
+
+.classpath
+file
+
+
+
+
+2010-01-15T05:35:42.234375Z
+7860429cc9d78fefe034fd6e0e1b8b3b
+2003-08-04T04:16:39.000000Z
+236
+zuojie
+has-props
+
+preview
+dir
+
+.project
+file
+
+
+
+
+2010-01-15T05:35:42.234375Z
+ed5ccfa7a4d8a151e680c02b077b0898
+2003-08-04T04:16:39.000000Z
+236
+zuojie
+has-props
+
+src
+dir
+
+build.sh
+file
+
+
+
+
+2010-01-15T05:35:42.250000Z
+9ca6cc384cde31d60b24772416ca5813
+2003-12-04T14:23:41.000000Z
+481
+zuojie
+has-props
+
+data
+dir
+
+.cvsignore
+file
+
+
+
+
+2010-01-15T05:35:42.250000Z
+2708164ca2e3de219e773b9d9ae95472
+2005-06-01T07:21:48.000000Z
+2106
+zuojie
+has-props
+

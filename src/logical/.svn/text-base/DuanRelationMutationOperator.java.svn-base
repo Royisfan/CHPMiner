@@ -1,0 +1,28 @@
+package duan;
+
+import ga.Chromosome;
+import ga.MutationOperator;
+
+/**
+ * 变异算子 只变异关系函数部分
+ */
+public class DuanRelationMutationOperator extends MutationOperator
+{
+	private DuanGep gep;
+
+	public DuanRelationMutationOperator(DuanGep gep, double probability)
+	{
+		super(probability);
+		this.gep = gep;
+	}
+
+	public Chromosome mutate(Chromosome chromosome)
+	{
+		if (!checkProbability()) return chromosome;
+		
+		DuanChromosome c = (DuanChromosome) chromosome;
+		
+		return new DuanChromosome(gep.getRelationCode(), c.getGenes());
+	}
+
+}

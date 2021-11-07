@@ -1,0 +1,66 @@
+package duan;
+
+import gep.Expression;
+import gep.FunctionFactory;
+import gep.num.NGEP;
+import gep.rel.GreaterEqualsFactory;
+import gep.rel.GreaterFactory;
+import gep.rel.LessEqualsFactory;
+import gep.rel.LessFactory;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
+/**
+ * 段磊的论文
+ * 
+ * 想找出一些不等式，在一个训练集合中支持度高，而在另外一个训练集合中支持度低
+ */
+public class DuanGep extends NGEP
+{
+	private Random random = new Random();
+
+	private char[] relations; // 所有关系函数代码
+
+	private Map<Character, FunctionFactory> relationFactories = new HashMap<Character, FunctionFactory>(); // 关系运算
+
+	public DuanGep()
+	{
+		addRelationFactory(new GreaterFactory());
+		addRelationFactory(new GreaterEqualsFactory());
+		addRelationFactory(new LessFactory());
+		addRelationFactory(new LessEqualsFactory());
+	}
+
+	public void initialize()
+	{
+		super.initialize();
+	}
+
+	/** 返回关系函数 */
+	public Expression getRelation(char code)
+	{
+		FunctionFactory factory = (FunctionFactory) relationFactories.get(new Character(code));
+		return factory.get(code);
+	}
+
+	/** 添加关系函数 */
+	public void addRelationFactory(FunctionFactory factory)
+	{
+		relationFactories.put(new Character(factory.getCode()), factory);
+	}
+
+	/** 返回随机的关系函数 */
+	public char getRelationCode()
+	{
+		int index = random.nextInt(relations.length);
+		return relations[index];
+	}
+
+	/** 设置可选关系函数集合 */
+	public void setRelationSet(String relations)
+	{
+		this.relations = relations.toCharArray();
+	}
+}

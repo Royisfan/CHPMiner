@@ -1,0 +1,88 @@
+package duan;
+
+import ga.Decoder;
+import ga.Evaluator;
+import ga.GepException;
+import ga.ManualStopper;
+import ga.Stopper;
+import ga.TournamentSelectionOperator;
+import gep.Formula;
+
+/**
+ * 不等式挖掘：挖掘不等式，在一个训练集中支持度很高，而在另外一个训练集中支持度很低
+ */
+public class Duan implements Runnable
+{
+	private DuanGep gep;
+
+	private Duan()
+	{
+		this.gep = new DuanGep();
+	}
+
+	public void run()
+	{
+		try
+		{
+//			gep.setFunctionSet("+-*/~QELSCTA+-*/~QELSCTA");
+			gep.setFunctionSet("+-*/+-*/+-*/+-*/+-*/+-*/+-*/+-*/+-*/+-*/+-*/+-*/+-*/");
+			gep.setVariableSet("abcdefghijklmnopqrst");	//"abcdefghijklmnopqrstuvwxyz"
+//			gep.setConstantSet("0123456789");
+			gep.setConstantSet("");
+
+			gep.setLinkFunction('+');
+
+			gep.setRelationSet("<>{}");
+
+			gep.setGeneNumber(2);
+			gep.setGeneHead(4);
+			
+			gep.setInitializer(new DuanInitializer(gep, 100));
+			gep.setSelectionOperator(new TournamentSelectionOperator(gep, 4));
+
+			gep.addMutationOperator(new DuanMutationOperator(gep, 0.04));
+			gep.addMutationOperator(new DuanRelationMutationOperator(gep, 0.04));
+
+			gep.addCrossoverOperator(new DuanOnePointCrossoverOperator(gep, 0.5));
+
+			Decoder decoder = new DuanDecoder(gep);
+			gep.setDecoder(decoder);
+
+			String file0 = "d:/work/zGEP/data/duan/train0.txt";
+			String file1 = "d:/work/zGEP/data/duan/train1.txt";
+			DuanDataSet train0 = new DuanDataSet(file0);
+			DuanDataSet train1 = new DuanDataSet(file1);
+
+			Evaluator evaluator = new DuanEvaluator(train0, train1);
+			gep.setEvaluator(evaluator);
+
+			// Stopper stopper = new MaxGenerationStopper(gep, 1);
+			Stopper stopper = new ManualStopper(gep);
+			gep.setStopper(stopper);
+
+			gep.run();
+
+			//=====================================================================
+			Formula formula = (Formula) gep.getBestProtein();
+
+			System.out.println("Best:" + formula.toString());
+			
+//			TextExporter exporter = new MathematicaTextExporter();
+//			System.out.println("Mathematica: " + exporter.export(formula));
+
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) throws GepException
+	{
+		Duan regression = new Duan();
+
+		Thread worker = new Thread(regression);
+		worker.setPriority(Thread.MIN_PRIORITY);
+		worker.start();
+	}
+}
