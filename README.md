@@ -1,3 +1,3 @@
 # CHPMiner
 
-DASFAA CHPMiner
+DASFAA CHPMiner.
